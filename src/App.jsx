@@ -1,19 +1,48 @@
+import { useEffect, useRef } from 'react'
 import Scene from './scene'
 import Navbar from './Navbar'
+import MainMenu from './MainMenu'
+
 
 const App = () => {
+  const blurRef = useRef()
+
+  useEffect(() => {
+    const handleMouseMove = (e) => {
+      const x = e.clientX
+      const y = e.clientY
+      const gradient = `radial-gradient(circle 300px at ${x}px ${y}px, transparent 0%, black 100%)`
+      blurRef.current.style.backdropFilter = 'blur(4px)'
+      blurRef.current.style.maskImage = gradient
+      blurRef.current.style.webkitMaskImage = gradient
+    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
   return (
     <>
-      {/* 3D background */}
-      <div className="fixed inset-0 -z-10">
+      {/* Background scene */}
+      <div className="fixed inset-0 -z-20">
         <Scene />
       </div>
 
-      <Navbar />
+      {/* Blur overlay with hole at mouse */}
+      <div
+        ref={blurRef}
+        className="fixed inset-0 -z-10"
+        style={{ backdropFilter: 'blur(4px)'}}
+      />
 
-      <div className="flex-row">
-        {/* rest of your page content here, flows normally */}
+      {/* Neon light overlay */}
+      <div className="fixed inset-0 neon-overlay z-10" />
+
+      <Navbar />
+      {/*
+      <div className="flex-col absolute top-[40vh] left-[45vw]">
+        <MainMenu />
       </div>
+      */}
     </>
   )
 }

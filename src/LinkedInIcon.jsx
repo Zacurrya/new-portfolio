@@ -1,19 +1,22 @@
 import { useGLTF } from '@react-three/drei'
-import { useFrame } from '@react-three/fiber'
 import { useRef } from 'react' 
+import { useSocialIcon } from '@hooks/useSocialIcon'
 
 const LinkedInIcon = () => {
     const { scene } = useGLTF('/models/linkedin.glb')
     const meshRef = useRef()
-
-    useFrame(() => {
-        meshRef.current.rotation.y -= 0.01
-    })
-
+    const { handlePointerOver, handlePointerOut, handleClick } = useSocialIcon(
+        'https://www.linkedin.com/in/zakariya-yusuf/', 
+        meshRef
+    )
+    
     return <primitive 
         ref = {meshRef}
         object={scene} 
-        position={[1.3,0,-2.2]} 
+        onClick={handleClick}
+        onPointerOver={handlePointerOver}
+        onPointerOut={handlePointerOut}
+        position={[1.3,0,-2]} 
     />
 };
 

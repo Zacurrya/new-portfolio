@@ -1,11 +1,11 @@
 import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import ShibuyaScramble from './ShibuyaScramble'
-import { EffectComposer, Bloom, DepthOfField } from '@react-three/postprocessing'
+import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { useEffect, useRef } from 'react'
 import neonLights from './neonLights'
 
-const CameraController = ({ target, radius }) => {
+const CameraController = ({ target, radius, startPhi, startTheta }) => {
   const { camera } = useThree()
   const mouse = useRef({ x: 0, y: 0 })
 
@@ -23,10 +23,10 @@ const CameraController = ({ target, radius }) => {
       Math.PI / 2.5, // ceiling angle
       Math.max(
         Math.PI / 8, // floor angle
-        Math.PI / 3 + mouse.current.y * 0.1
+        startPhi + mouse.current.y * 0.1
       )
     )
-    const theta = mouse.current.x * 0.1
+    const theta = startTheta + mouse.current.x * 0.1
 
     // place camera on sphere surface around target
     camera.position.set(
@@ -47,8 +47,9 @@ const CameraController = ({ target, radius }) => {
 
 const Scene = () => {
   const target = { x: -236, y: -30, z: 85 }
-  const radius = 140 // controls tilt angle range
+  const radius = 300 // controls the orthographic camera's 'far' distance
   const startPhi = Math.PI / 3 // starting vertical angle
+  const startTheta = Math.PI / -9 // starting horizontal angle
 
   return (
     <div className="w-full h-full overflow-hidden">
@@ -60,7 +61,7 @@ const Scene = () => {
             target.y + radius * Math.cos(startPhi),
             target.z + radius * Math.sin(startPhi)
           ],
-          zoom: 15,
+          zoom: 13,
         }}
       >
         <ambientLight intensity={70} color="#000033" />
@@ -86,7 +87,6 @@ const Scene = () => {
         <ShibuyaScramble />
 
         <EffectComposer>
-          <DepthOfField bokehScale={5} />
           <Bloom
             intensity={1.5}
             luminanceThreshold={0.3}
@@ -95,7 +95,12 @@ const Scene = () => {
           />
         </EffectComposer>
 
-        <CameraController target={target} radius={radius} />
+        <CameraController 
+        target={target} 
+        radius={radius}
+        startPhi={startPhi}
+        startTheta={startTheta}
+        />
       </Canvas>
     </div>
   )

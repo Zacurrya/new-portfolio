@@ -8,9 +8,9 @@ const Navbar = () => {
             <img src="/header-logo.svg" className="w-[8vw]" />
 
             {/* 3D Social Icons */}
-            <div className="w-[18vw]">
+            <div className="w-[20vw]">
                 <Canvas
-                    orthographic camera={{ position: [0,0,0], zoom: 50}}
+                    orthographic camera={{ position: [0,0,0], zoom: 45}}
                 >
                     <ambientLight intensity={3} />
                     <GithubIcon />
