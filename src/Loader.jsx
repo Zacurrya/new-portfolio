@@ -31,8 +31,8 @@ const Loader = () => {
 
     return (
         <div className="flex flex-col items-center text-center h-full bg-gray-800">
-            <img src="/images/tokyo-night.jpg" className="absolute top-13" />
-            <img src="/images/london-night.jpg" className="absolute bottom-13" />
+            <img src="/images/tokyo-night.jpg" className="absolute top-13" style={{ filter: 'blur(1px)'}}/>
+            <img src="/images/london-night.jpg" className="absolute bottom-13" style={{ filter: 'blur(1px)'}}/>
             <div className="mt-140">
                 <img
                     className="w-52 z-3"
