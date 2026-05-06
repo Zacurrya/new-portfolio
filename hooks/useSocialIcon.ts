@@ -15,9 +15,9 @@ export const useSocialIcon = (link: string, meshRef: React.RefObject<Object3D>) 
     const handleClick = () => {
         window.open(link)
     }
-
     useFrame(() => {
         if (!isHovering) meshRef.current.rotation.y -= 0.01
+        else meshRef.current.rotation.y -= 0.1
     })
 
     return { 

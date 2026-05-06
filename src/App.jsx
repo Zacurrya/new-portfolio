@@ -35,15 +35,17 @@ const App = () => {
       />
 
       {/* Neon light overlay */}
-      <div className="fixed inset-0 neon-overlay z-10" />
+      {/* <div className="fixed inset-0 neon-overlay z-10" /> */}
 
       <Navbar className="fixed top-0" />
 
-      <div className="flex-col text-center mt-[25vh]">
+      <div className="flex-col text-center items-center mt-[25vh]">
         <h1 className="text-[12vw] text-white font-scoreboard">Zaky Yusuf</h1>
         {/*<MainMenu />*/}
 
-        <h1 className="text-[7vw] text-red-500 mt-[38vh] font-neon">Projects</h1>
+        <div className="flex flex-col justify-center items-center">
+          <h1 className="text-[7vw] text-blue-400 mt-[38vh] mb-0 font-neon">Projects</h1>
+        </div>
       </div> 
 
     </>

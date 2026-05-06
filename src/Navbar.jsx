@@ -4,7 +4,7 @@ import LinkedInIcon from "./LinkedInIcon"
 
 const Navbar = () => {
     return (
-        <div className="flex items-center justify-between px-5">
+        <div className="flex items-center justify-between px-5 z-100">
             <img src="/header-logo.svg" className="w-[8vw]" />
 
             {/* 3D Social Icons */}
