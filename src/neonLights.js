@@ -11,14 +11,14 @@ const neonLights = [
   // close lights
   { offset: [-5, 15, -40], intensity: 2000, color: magenta },
   { offset: [40, 15, -40], intensity: 2000, color: cyan },
-  { offset: [-10, 15, 20], intensity: 2000, color: orange },
+  { offset: [-13, 20, 8], intensity: 2000, color: orange },
   { offset: [20, 10, 40], intensity: 2000, color: purple },
   { offset: [-40, 10, 10], intensity: 2000, color: green },
-  { offset: [10, 20, -10], intensity: 1000, color: yellow },
-  { offset: [-20, 5, -15], intensity: 2000, color: pink },
+  { offset: [34, 18, -44], intensity: 3000, color: yellow },
+  { offset: [-20, 5, -15], intensity: 8000, color: green },
   { offset: [30, 8, 30], intensity: 2000, color: blue },
   // far lights
-  { offset: [-100, 20, -120], intensity: 8000, color: magenta },
+  { offset: [-100, 20, -120], intensity: 8000, color: blue },
   { offset: [150, 20, -80], intensity: 8000, color: cyan },
   { offset: [-80, 15, 80], intensity: 8000, color: purple },
   { offset: [130, 15, 100], intensity: 8000, color: pink },
