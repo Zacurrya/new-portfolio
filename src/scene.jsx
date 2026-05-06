@@ -2,8 +2,9 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import { Environment } from '@react-three/drei'
 import ShibuyaScramble from './ShibuyaScramble'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, Suspense } from 'react'
 import neonLights from './neonLights'
+import Loader from './Loader'
 
 const CameraController = ({ target, radius, startPhi, startTheta }) => {
   const { camera } = useThree()
@@ -64,43 +65,45 @@ const Scene = () => {
           zoom: 13,
         }}
       >
-        <ambientLight intensity={70} color="#000033" />
+        <Suspense fallback={null}>
+          <ambientLight intensity={70} color="#000033" />
 
-        {/* Neon lights */}
-        {neonLights.map((light, i) => (
-          <pointLight
-            key={i}
-            position={[
-              target.x + light.offset[0],
-              target.y + light.offset[1],
-              target.z + light.offset[2]
-            ]}
-            intensity={light.intensity}
-            color={light.color}
+          {/* Neon lights */}
+          {neonLights.map((light, i) => (
+            <pointLight
+              key={i}
+              position={[
+                target.x + light.offset[0],
+                target.y + light.offset[1],
+                target.z + light.offset[2]
+              ]}
+              intensity={light.intensity}
+              color={light.color}
+            />
+          ))}
+
+          {/* Background */}
+          <Environment preset="night" />
+          <color attach="background" args={['#000011']} />
+
+          <ShibuyaScramble />
+
+          <EffectComposer>
+            <Bloom
+              intensity={1.5}
+              luminanceThreshold={0.3}
+              luminanceSmoothing={0.9}
+              mipmapBlur
+            />
+          </EffectComposer>
+
+          <CameraController 
+          target={target} 
+          radius={radius}
+          startPhi={startPhi}
+          startTheta={startTheta}
           />
-        ))}
-
-        {/* Background */}
-        <Environment preset="night" />
-        <color attach="background" args={['#000011']} />
-
-        <ShibuyaScramble />
-
-        <EffectComposer>
-          <Bloom
-            intensity={1.5}
-            luminanceThreshold={0.3}
-            luminanceSmoothing={0.9}
-            mipmapBlur
-          />
-        </EffectComposer>
-
-        <CameraController 
-        target={target} 
-        radius={radius}
-        startPhi={startPhi}
-        startTheta={startTheta}
-        />
+        </Suspense>
       </Canvas>
     </div>
   )

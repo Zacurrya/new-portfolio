@@ -2,10 +2,13 @@ import { useEffect, useRef } from 'react'
 import Scene from './scene'
 import Navbar from './Navbar'
 import MainMenu from './MainMenu'
+import Loader from './Loader'
+import { useProgress } from '@react-three/drei'
 
 
 const App = () => {
   const blurRef = useRef()
+  const { progress } = useProgress()
 
   useEffect(() => {
     const handleMouseMove = (e) => {
@@ -23,33 +26,38 @@ const App = () => {
   return (
     <>
       {/* Background scene */}
-      <div className="fixed inset-0 -z-20">
+      <div className={`fixed inset-0 -z-20 ${progress < 100 ? 'invisivble':''}`}>
         <Scene />
       </div>
+      {progress < 100 && <Loader />} 
+      {progress === 100 && (
+        <>
 
-      {/* Blur overlay with hole at mouse */}
-      <div
-        ref={blurRef}
-        className="fixed inset-0 -z-10"
-        style={{ backdropFilter: 'blur(4px)'}}
-      />
+          {/* Blur overlay with hole at mouse */}
+          <div
+            ref={blurRef}
+            className="fixed inset-0 -z-10"
+            style={{ backdropFilter: 'blur(4px)'}}
+          />
 
-      {/* Neon light overlay */}
-      {/* <div className="fixed inset-0 neon-overlay z-10" /> */}
+          {/* Neon light overlay */}
+          {/* <div className="fixed inset-0 neon-overlay z-10" /> */}
 
-      <Navbar className="fixed top-0" />
+          <Navbar className="fixed top-0" />
 
-      <div className="flex-col text-center items-center mt-[25vh]">
-        <h1 className="text-[12vw] text-white font-scoreboard">Zaky Yusuf</h1>
-        {/*<MainMenu />*/}
+          <div className="flex-col text-center items-center mt-[25vh]">
+            <h1 className="text-[12vw] text-white font-scoreboard select-none">Zaky Yusuf</h1>
+            {/*<MainMenu />*/}
 
-        <div className="flex flex-col justify-center items-center">
-          <h1 className="text-[7vw] text-blue-400 mt-[38vh] mb-0 font-neon">Projects</h1>
-        </div>
-      </div> 
-
+            <div className="flex flex-col justify-center items-center">
+              <h1 className="text-[7vw] text-blue-400 mt-[38vh] mb-0 font-neon select-none">Projects</h1>
+            </div>
+          </div> 
+        </>
+      )}
     </>
   )
+
 }
 
 export default App;
