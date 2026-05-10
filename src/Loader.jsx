@@ -1,5 +1,6 @@
 import { useProgress } from '@react-three/drei'
 import { useEffect, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 const Loader = () => {
     const { progress } = useProgress()
@@ -15,10 +16,27 @@ const Loader = () => {
     }, [progress])
 
     return (
-        <div className="flex flex-col items-center text-center h-full bg-gray-800">
-            <img src="/images/tokyo-night.jpg" className="absolute top-0" style={{ filter: 'blur(1px)'}}/>
-            <img src="/images/london-night.jpg" className="absolute bottom-0" style={{ filter: 'blur(1px)'}}/>
-            <div className="relative w-40 h-40 z-3 mt-120">
+        <motion.div
+            className="fixed inset-0 flex flex-col items-center justify-center text-center"
+            initial={{ backgroundColor: 'rgba(0, 0, 0, 1)' }}
+            animate={{ backgroundColor: 'rgba(0, 0, 0, 1)' }}
+            exit={{ backgroundColor: 'rgba(0, 0, 0, 0)' }}
+            transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
+        >
+            <motion.div
+                className="absolute inset-0 loader-bg"
+                initial={{ opacity: 1, y: 0 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -40 }}
+                transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
+            />
+            <motion.div
+                className="relative w-40 h-40 z-3"
+                initial={{ opacity: 1 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+            >
                 <img
                     className="block w-40 h-40 opacity-20"
                     src="/logo-w-tagline.svg"
@@ -35,8 +53,8 @@ const Loader = () => {
                         alt="Logo"
                     />
                 </div>
-            </div>
-        </div>
+            </motion.div>
+        </motion.div>
     )
 }
 

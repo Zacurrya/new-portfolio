@@ -30,13 +30,15 @@ const App = () => {
         <SceneManager />
       </div>
 
-      {isLoading && <Loader />} 
+      <AnimatePresence>
+        {isLoading && <Loader />}
+      </AnimatePresence>
       {!isLoading && (
         <>
           <BackgroundEffects />
 
             {/* Navbar */}
-            <Navbar className="fixed top-0" handleClick={() => transitionTo('main')} />
+            <Navbar handleClick={() => transitionTo('main')} />
             {/* World Coords of 3D models */}
             <GoogleMapsCoords />
 

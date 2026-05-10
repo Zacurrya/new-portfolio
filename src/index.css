@@ -68,3 +68,22 @@ html, body, #root {
     background:
         radial-gradient(circle 220px at 50% 50%, rgba(235, 12, 235, 0.5) 20%, transparent 80%);  
 }
+
+.loader-bg {
+    background-image: url('/images/shinjuku-night.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+@media (min-width: 500px) and (max-width: 900px) {
+    .loader-bg {
+        background-size: 150% auto;
+        background-position: 30% center;
+    }
+}
+
+@media (min-width: 901px) and (max-width: 1023px) {
+    .loader-bg {
+        background-size: 100% auto;
+    }
+}
