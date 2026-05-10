@@ -1,49 +1,41 @@
 import { useProgress } from '@react-three/drei'
-import { useState, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 
 const Loader = () => {
-    const maxSize = 0.9
-    const minSize = 0.8
-    const [scale, setScale] = useState(1)
-    const scaleRef = useRef(minSize)
     const { progress } = useProgress()
-    let isGrowing = useRef(true)
+    const maxProgress = useRef(0) // Ensures the progress bar never visually goes back
+    const revealRef = useRef(null)
 
+    // renders more of the non-transparent logo as loading progress increases
     useEffect(() => {
-        const interval = setInterval(() => {
-            // grow
-            if (isGrowing.current) {
-                if (scaleRef.current <= maxSize) scaleRef.current += 0.0025
-                else isGrowing.current = false
-            }
-            // shrinking
-            else {
-                if (scaleRef.current >= minSize) scaleRef.current -= 0.0025
-                else isGrowing.current = true
-            }
-
-            setScale(scaleRef.current)
-
-        }, 16)        
-        console.log("Progress:",progress)
-        return () => clearInterval(interval)
-    }, [])
+        if (!revealRef.current) return
+        if (progress <= maxProgress.current) return
+        maxProgress.current = progress
+        revealRef.current.style.clipPath = `inset(0 ${100 - maxProgress.current}% 0 0)`
+    }, [progress])
 
     return (
         <div className="flex flex-col items-center text-center h-full bg-gray-800">
-            <img src="/images/tokyo-night.jpg" className="absolute top-13" style={{ filter: 'blur(1px)'}}/>
-            <img src="/images/london-night.jpg" className="absolute bottom-13" style={{ filter: 'blur(1px)'}}/>
-            <div className="mt-140">
+            <img src="/images/tokyo-night.jpg" className="absolute top-0" style={{ filter: 'blur(1px)'}}/>
+            <img src="/images/london-night.jpg" className="absolute bottom-0" style={{ filter: 'blur(1px)'}}/>
+            <div className="relative w-40 h-40 z-3 mt-120">
                 <img
-                    className="w-52 z-3"
-                    src="/header-logo.svg"
+                    className="block w-40 h-40 opacity-20"
+                    src="/logo-w-tagline.svg"
                     alt="Logo"
-                    style={{
-                        transform: `scale(${scale})`,
-                    }}
                 />
+                <div
+                    ref={revealRef}
+                    className="absolute inset-0 overflow-hidden"
+                    style={{ clipPath: 'inset(0 100% 0 0)' }}
+                >
+                    <img
+                        className="block w-40 h-40"
+                        src="/logo-w-tagline.svg"
+                        alt="Logo"
+                    />
+                </div>
             </div>
-            <h1 className="text-4xl z-3 mt-2 font-sans font-bold text-blue-50">{progress.toPrecision(2)}/100</h1>
         </div>
     )
 }

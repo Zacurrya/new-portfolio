@@ -1,12 +1,12 @@
 import { Canvas, useThree, useFrame } from '@react-three/fiber'
-import { Environment } from '@react-three/drei'
-import ShibuyaScramble from './ShibuyaScramble'
+import TokyoSkytree from './components/TokyoSkytree'
+import BromleyByBow from './components/BromleyByBow'
+import ShibuyaScramble from './components/ShibuyaScramble'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { useEffect, useRef, Suspense } from 'react'
-import neonLights from './neonLights'
-import Loader from './Loader'
 
-const CameraController = ({ target, radius, startPhi, startTheta }) => {
+
+const CameraController = ({ target, radius, startPhi, startTheta, rotationMultiplier }) => {
   const { camera } = useThree()
   const mouse = useRef({ x: 0, y: 0 })
 
@@ -24,10 +24,10 @@ const CameraController = ({ target, radius, startPhi, startTheta }) => {
       Math.PI / 2.5, // ceiling angle
       Math.max(
         Math.PI / 8, // floor angle
-        startPhi + mouse.current.y * 0.1
+        startPhi + rotationMultiplier * mouse.current.y * 0.1
       )
     )
-    const theta = startTheta + mouse.current.x * 0.1
+    const theta = startTheta + rotationMultiplier * mouse.current.x * 0.1
 
     // place camera on sphere surface around target
     camera.position.set(
@@ -38,19 +38,14 @@ const CameraController = ({ target, radius, startPhi, startTheta }) => {
 
     // always look at target
     camera.lookAt(target.x, target.y, target.z)
-
-    // required for orthographic — updates the frustum after position change
     camera.updateProjectionMatrix()
+    
   })
 
   return null
 }
 
-const Scene = () => {
-  const target = { x: -236, y: -30, z: 85 }
-  const radius = 300 // controls the orthographic camera's 'far' distance
-  const startPhi = Math.PI / 3 // starting vertical angle
-  const startTheta = Math.PI / -9 // starting horizontal angle
+const Scene = ({ target, radius, zoom, startPhi, startTheta, environment, ambientLightColour, ambientLightIntensity, rotationMultiplier}) => {
 
   return (
     <div className="w-full h-full overflow-hidden">
@@ -62,31 +57,17 @@ const Scene = () => {
             target.y + radius * Math.cos(startPhi),
             target.z + radius * Math.sin(startPhi)
           ],
-          zoom: 13,
+          zoom: zoom,
         }}
       >
         <Suspense fallback={null}>
-          <ambientLight intensity={70} color="#000033" />
-
-          {/* Neon lights */}
-          {neonLights.map((light, i) => (
-            <pointLight
-              key={i}
-              position={[
-                target.x + light.offset[0],
-                target.y + light.offset[1],
-                target.z + light.offset[2]
-              ]}
-              intensity={light.intensity}
-              color={light.color}
-            />
-          ))}
-
-          {/* Background */}
-          <Environment preset="night" />
+          <ambientLight intensity={ambientLightIntensity} color={ambientLightColour} />
           <color attach="background" args={['#000011']} />
-
-          <ShibuyaScramble />
+          
+          {/* Conditionally renders the models and their unique things*/}
+          <ShibuyaScramble target={target} /> 
+          <BromleyByBow />
+          <TokyoSkytree />
 
           <EffectComposer>
             <Bloom
@@ -98,13 +79,15 @@ const Scene = () => {
           </EffectComposer>
 
           <CameraController 
-          target={target} 
-          radius={radius}
-          startPhi={startPhi}
-          startTheta={startTheta}
+            target={target} 
+            radius={radius}
+            startPhi={startPhi}
+            startTheta={startTheta}
+            rotationMultiplier={rotationMultiplier}
           />
         </Suspense>
       </Canvas>
+      
     </div>
   )
 }

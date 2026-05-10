@@ -1,61 +1,79 @@
-import { useEffect, useRef } from 'react'
-import Scene from './scene'
-import Navbar from './Navbar'
-import MainMenu from './MainMenu'
+import Navbar from './components/Navbar'
 import Loader from './Loader'
-import { useProgress } from '@react-three/drei'
+import useLoading from '@hooks/useLoading.js'
+import SceneManager from './SceneManager'
+import useScene from '@hooks/useScene'
+import About from './scenes/about/About'
+import Hero from './scenes/home/Hero'
+import Projects from './scenes/projects/Projects'
+import GoogleMapsCoords from './components/GoogleMapsCoords'
 
+import { motion, AnimatePresence } from 'framer-motion'
+import BackgroundEffects from './components/BackgroundEffects'
 
 const App = () => {
-  const blurRef = useRef()
-  const { progress } = useProgress()
+  const isLoading = useLoading()
+  const { activeScene, transitionTo, transitioning } = useScene()
 
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = e.clientX
-      const y = e.clientY
-      const gradient = `radial-gradient(circle 300px at ${x}px ${y}px, transparent 0%, black 100%)`
-      blurRef.current.style.backdropFilter = 'blur(4px)'
-      blurRef.current.style.maskImage = gradient
-      blurRef.current.style.webkitMaskImage = gradient
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
+  const slideVariants = {
+    initial: (custom) => ({ x: custom.enter, opacity: 0 }),
+    animate: { x: 0, opacity: 1 },
+    exit: (custom) => ({ x: custom.exit, opacity: 0 })
+  }
+  
   return (
-    <>
-      {/* Background scene */}
-      <div className={`fixed inset-0 -z-20 ${progress < 100 ? 'invisivble':''}`}>
-        <Scene />
+    <div className="max-w-full">
+      {/* -- 3D MODEL SCENE MANAGER -- 
+        Outside of conditional rendering as we need to mount the canvas in order to load the models
+      */}
+      <div className={`fixed inset-0 -z-20 ${isLoading ? 'invisivble':''}`}>
+        <SceneManager />
       </div>
-      {progress < 100 && <Loader />} 
-      {progress === 100 && (
+
+      {isLoading && <Loader />} 
+      {!isLoading && (
         <>
+          <BackgroundEffects />
 
-          {/* Blur overlay with hole at mouse */}
-          <div
-            ref={blurRef}
-            className="fixed inset-0 -z-10"
-            style={{ backdropFilter: 'blur(4px)'}}
-          />
+            {/* Navbar */}
+            <Navbar className="fixed top-0" handleClick={() => transitionTo('main')} />
+            {/* World Coords of 3D models */}
+            <GoogleMapsCoords />
 
-          {/* Neon light overlay */}
-          {/* <div className="fixed inset-0 neon-overlay z-10" /> */}
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={activeScene}
+                custom={activeScene === 'main'
+                  ? { enter: '-100%', exit: '-100%' }
+                  : { enter: '100%', exit: '100%' }
+                }
+                variants={slideVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                transition={{ duration: 0.5, ease: [0.2, 0.7, 0.2, 1] }}
+              >
+                {/* -- MAIN SCREEN CONTENT -- */}
+                {activeScene === 'main' && (
+                  <>
+                    <Hero />
+                  </>
+                )}
 
-          <Navbar className="fixed top-0" />
+                {/* -- ABOUT SCREEN CONTENT -- */}
+                {activeScene === 'about' && (
+                  <About />
+                )} 
 
-          <div className="flex-col text-center items-center mt-[25vh]">
-            <h1 className="text-[12vw] text-white font-scoreboard select-none">Zaky Yusuf</h1>
-            {/*<MainMenu />*/}
-
-            <div className="flex flex-col justify-center items-center">
-              <h1 className="text-[7vw] text-blue-400 mt-[38vh] mb-0 font-neon select-none">Projects</h1>
-            </div>
-          </div> 
+                {/* -- PROJECT SCREEN CONTENT -- */}
+                {activeScene === 'projects' && (
+                  <Projects />
+                )}
+              </motion.div>
+            </AnimatePresence>
         </>
       )}
-    </>
+    </div>
   )
 
 }

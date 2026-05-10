@@ -13,10 +13,6 @@ dist-ssr
 *.local
 TODO.md
 
-# irrelevant models
-public/models/tokyo-night.glb
-public/models/tokyo-station-a.glb
-
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
