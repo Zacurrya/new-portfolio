@@ -87,3 +87,10 @@ html, body, #root {
         background-size: 100% auto;
     }
 }
+
+@media (min-width: 1024px) {
+    .loader-bg {
+        background-size: contain;
+        background-position: 30% center;
+    }
+}
