@@ -2,7 +2,7 @@ import { useGLTF } from '@react-three/drei'
 import neonLights from '../neonLights';
 import useScene from '@hooks/useScene'
 
-const src = '/models/shibuya-scramble-crossing.glb'
+const src = 'https://pub-a9f4733fc04d4c05981b0e992bdddbd0.r2.dev/shibuya-scramble-crossing.glb'
 
 const ShibuyaScramble = ({ target }) => {
     const { activeScene } = useScene()
@@ -40,7 +40,5 @@ const ShibuyaScramble = ({ target }) => {
         </>
     )
 };
-
-useGLTF.preload(src)
 
 export default ShibuyaScramble;

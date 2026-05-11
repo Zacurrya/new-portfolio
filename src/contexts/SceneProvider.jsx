@@ -5,7 +5,8 @@ import SceneContext from "./SceneContext"
 const SCENES = {
     main: 'main',
     about: 'about',
-    projects: 'projects'
+    projects: 'projects',
+    email: 'email'
 }
 
 export const SceneProvider = ({children}) => {
@@ -18,7 +19,7 @@ export const SceneProvider = ({children}) => {
         setTimeout(() => {
             setActiveScene(targetScene)
             setTransitioning(false)
-        }, 500)
+        }, 200)
     }
 
     return (

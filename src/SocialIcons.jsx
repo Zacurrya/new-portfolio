@@ -1,16 +1,20 @@
+import useScene from "@hooks/useScene"
+
 const SocialIcons= ({ iconSize = "w-6 h-6", emailIconSize= "w-8 h-8"}) => {
+    const { transitionTo } = useScene()
     return (
         <div className="flex items-center gap-6">
             {/* Email Icon - Simple outline (conditionally shown) */}
-            <a
-                href="#contact"
+            <button
+                type="button"
+                onClick={() => transitionTo('email')}
                 className="mt-1 text-white hover:text-blue-200 transition-colors"
                 aria-label="Email"
             >
                 <svg className={emailIconSize} fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.7">
                     <path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
-            </a>
+            </button>
 
             {/* GitHub Icon - Simple outline */}
             <a

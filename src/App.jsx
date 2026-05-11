@@ -6,6 +6,7 @@ import useScene from '@hooks/useScene'
 import About from './scenes/about/About'
 import Hero from './scenes/home/Hero'
 import Projects from './scenes/projects/Projects'
+import Email from './scenes/email/Email'
 import GoogleMapsCoords from './components/GoogleMapsCoords'
 
 import { motion, AnimatePresence } from 'framer-motion'
@@ -70,6 +71,11 @@ const App = () => {
                 {/* -- PROJECT SCREEN CONTENT -- */}
                 {activeScene === 'projects' && (
                   <Projects />
+                )}
+
+                {/* -- EMAIL SCREEN CONTENT -- */}
+                {activeScene === 'email' && (
+                  <Email />
                 )}
               </motion.div>
             </AnimatePresence>

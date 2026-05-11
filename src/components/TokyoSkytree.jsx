@@ -1,7 +1,7 @@
 import { useGLTF, useEnvironment } from '@react-three/drei'
 import { useEffect } from 'react'
 
-const src = '/models/tokyo-skytree.glb'
+const src = 'https://pub-a9f4733fc04d4c05981b0e992bdddbd0.r2.dev/tokyo-skytree.glb'
 
 const TokyoSkytree = () => {
     const { scene } = useGLTF(src)
@@ -22,7 +22,5 @@ const TokyoSkytree = () => {
             /> 
     )
 };
-
-useGLTF.preload(src)
 
 export default TokyoSkytree

@@ -36,6 +36,17 @@ const CONFIGS = {
         ambientLightColor: "#000000",
         ambientLightIntensity: 0,
         rotationMultiplier: 0.2
+    },
+    email: {
+        target: {x:-260, y: 0, z:460},
+        radius: 100,
+        zoom: 30,
+        startPhi: Math.PI / 3, // starting vertical angle
+        startTheta: 0, // straight on
+        environment: "city",
+        ambientLightColor: "#ffffff",
+        ambientLightIntensity: 0.4,
+        rotationMultiplier: 0.1
     }
 }
 

@@ -2,9 +2,10 @@ import { Canvas, useThree, useFrame } from '@react-three/fiber'
 import TokyoSkytree from './components/TokyoSkytree'
 import BromleyByBow from './components/BromleyByBow'
 import ShibuyaScramble from './components/ShibuyaScramble'
+import PostBox from './components/PostBox'
 import { EffectComposer, Bloom } from '@react-three/postprocessing'
 import { useEffect, useRef, Suspense } from 'react'
-
+import { Preload } from '@react-three/drei'
 
 const CameraController = ({ target, radius, startPhi, startTheta, rotationMultiplier }) => {
   const { camera } = useThree()
@@ -74,9 +75,11 @@ const Scene = ({
           <color attach="background" args={['#000011']} />
           
           {/* Conditionally renders the models and their unique things*/}
-          <ShibuyaScramble target={target} /> 
+          <ShibuyaScramble target={target} />
           <BromleyByBow />
           <TokyoSkytree />
+          <PostBox />
+          <Preload all />
 
           <EffectComposer>
             <Bloom
