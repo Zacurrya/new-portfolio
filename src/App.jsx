@@ -13,10 +13,10 @@ import BackgroundEffects from './components/BackgroundEffects'
 
 const App = () => {
   const isLoading = useLoading()
-  const { activeScene, transitionTo, transitioning } = useScene()
+  const { activeScene, transitionTo } = useScene()
 
   const slideVariants = {
-    initial: (custom) => ({ x: custom.enter, opacity: 0 }),
+    initial: (custom) => ({ x: custom.enter, opacity: 0.8 }),
     animate: { x: 0, opacity: 1 },
     exit: (custom) => ({ x: custom.exit, opacity: 0 })
   }

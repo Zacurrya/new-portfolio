@@ -1,7 +1,7 @@
 const About = () => {
     return (
         <div className="flex flex-col items-center mt-32 sm:mt-44 md:mt-44 lg:mt-44">
-            <div className="font-inter w-11/12 md:w-4/5 max-w-5xl bg-blue-200/20 backdrop-blur-md rounded-2xl p-5 md:p-6 lg:p-8">
+            <div className="font-inter w-11/12 md:w-4/5 max-w-5xl bg-blue-200/10 backdrop-blur-md rounded-2xl p-5 md:p-6 lg:p-8">
                 
                 {/* Header */}
                 <h1 className="font-orbitron font-bold text-3xl md:text-4xl lg:text-5xl text-white mb-1 drop-shadow-lg">About Me</h1>

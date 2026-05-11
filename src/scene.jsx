@@ -45,7 +45,16 @@ const CameraController = ({ target, radius, startPhi, startTheta, rotationMultip
   return null
 }
 
-const Scene = ({ target, radius, zoom, startPhi, startTheta, ambientLightColour, ambientLightIntensity, rotationMultiplier}) => {
+const Scene = ({
+  target = { x: 0, y: 0, z: 0 },
+  radius = 1,
+  zoom = 1,
+  startPhi = Math.PI / 3,
+  startTheta = 0,
+  ambientLightColour,
+  ambientLightIntensity = 0,
+  rotationMultiplier = 0,
+}) => {
 
   return (
     <div className="w-full h-full overflow-hidden">

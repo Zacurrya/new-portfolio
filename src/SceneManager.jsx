@@ -25,13 +25,24 @@ const CONFIGS = {
         ambientLightColor: "#000000",
         ambientLightIntensity: 0,
         rotationMultiplier: 0.6
+    },
+    projects: {
+        target: {x:320, y: 170, z:640},
+        radius: 500,
+        zoom: 1,
+        startPhi: Math.PI / 6, // starting vertical angle
+        startTheta: Math.PI / -3, // starting horizontal angle
+        environment: "city",
+        ambientLightColor: "#000000",
+        ambientLightIntensity: 0,
+        rotationMultiplier: 0.2
     }
 }
 
 const SceneManager = () => {
     const { activeScene } = useScene()
 
-    const activeConfig = CONFIGS[activeScene]
+    const activeConfig = CONFIGS[activeScene] ?? CONFIGS.main
 
     return (
         <>

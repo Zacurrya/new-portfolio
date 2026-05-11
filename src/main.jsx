@@ -4,6 +4,9 @@ import { Analytics } from "@vercel/analytics/react"
 import { SceneProvider } from '@contexts/SceneProvider.jsx'
 import App from './App.jsx'
 import './index.css'
+import { useGLTF } from '@react-three/drei'
+
+useGLTF.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.5.6/')
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
