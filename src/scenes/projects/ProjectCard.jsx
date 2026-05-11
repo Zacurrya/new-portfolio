@@ -1,6 +1,6 @@
 const ProjectCard = ({ image, title, description, skills, repo }) => {
     const imageSrc = Array.isArray(image) ? image[0] : image
-    const resolvedSrc = imageSrc ? `/project-images/${imageSrc}` : ''
+    const resolvedSrc = imageSrc ? `/images/projects/${imageSrc}` : ''
     const repoUrl = repo ? `https://github.com/Zacurrya/${repo}` : null
 
     return (
